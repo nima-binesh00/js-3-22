@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      main {
+        width: 40%;
+        height: 500px;
+        background-color: rgb(49, 56, 45);
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        position: relative;
+      }
+      main > * {
+        text-align: center;
+      }
+      h1 {
+        position: absolute;
+        top: 10%;
+        align-self: center;
+        color: aquamarine;
+        box-shadow: 0px 0px 10px 5px rgb(19, 167, 147);
+      }
+      button {
+        width: 80px;
+        height: 80px;
+        border-radius: 50px;
+        align-self: center;
+        transition: all ease 1s;
+        position: absolute;
+        bottom: -40px;
+        background-color: aquamarine;
+      }
+      p {
+        font-size: xx-large;
+        background: linear-gradient(#eee, #333);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1></h1>
+      <p></p>
+      <button></button>
+    </main>
+    <script>
+      let h1 = document.querySelector("h1");
+      let hp = document.querySelector("p");
+      let bu = document.querySelector("button");
+      console.log(hp);
+
+      async function name(params) {
+        try {
+          let num = await fetch("https://api.adviceslip.com/advice");
+          let data = await num.json();
+          console.log(data.slip.advice);
+          hp.innerText = data.slip.advice;
+          h1.textContent = `advice: #${data.slip.id}`;
+          return;
+        } catch (e) {
+          console.log(e);
+        }
+      }
+      name();
+      bu.addEventListener("click", () => {
+        bu.style.boxShadow = "0px 0px 40px 20px rgb(19, 167, 147)";
+        setTimeout(() => {
+          bu.style.boxShadow = "";
+          name();
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
